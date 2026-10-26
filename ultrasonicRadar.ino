@@ -26,34 +26,37 @@ void setup() {
 
 void loop() {
   for (int angle = MIN; angle <= MAX; angle += STEP) { //sweep up
-    servo.write(angle);
-    Serial.println(angle);
-    delay(30); //30 ms delay
+    measureAt(angle);
   }
 
   for (int angle = MAX; angle >= MIN; angle -= STEP) { //sweep down
-    servo.write(angle);
-    Serial.println(angle);
-    delay(30); //30 ms delay
+    measureAt(angle);
   }
-//   //start pin low
-//   digitalWrite(TRIG_PIN, LOW);
-//   delayMicroseconds(2);
-// //send 10 microsecond trigger
-//   digitalWrite(TRIG_PIN, HIGH);
-//   delayMicroseconds(10);
-//   digitalWrite(TRIG_PIN, LOW);
 
-//   //Measure how long till echo (stops when pin goes low)
-//   unsigned long duration = pulseIn(ECHO_PIN, HIGH, 30000); //give up after 30 ms
+  delay(100); // short delay between pings
+}
 
-//   if (duration == 0) {
-//     Serial.println("No Echo");
-//   } else {
-//     float distanceCm = duration * 0.0343 / 2; //speed of sound (343 m/s)
-//     Serial.print(distanceCm);
-//     Serial.print("cm ");
-//   }
+float readDistanceCm() {
+  //start pin low
+  digitalWrite(TRIG_PIN, LOW);
+  delayMicroseconds(2);
+//send 10 microsecond trigger
+  digitalWrite(TRIG_PIN, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(TRIG_PIN, LOW);
 
-//   delay(100); // short delay between pings
+  //Measure how long till echo (stops when pin goes low)
+  unsigned long duration = pulseIn(ECHO_PIN, HIGH, 30000); //give up after 30 ms
+
+  if (duration == 0) { return 0; } //no distance found
+  return duration * 0.0343 / 2; //speed of sound (343 m/s)
+}
+
+void measureAt(int angle) {
+  servo.write(angle);
+  delay(60); //60 ms delay
+  float cm = readDistanceCm();
+  Serial.print(angle);
+  Serial.print(',');
+  Serial.println(cm, 1); //distance to 1 decimal place
 }
