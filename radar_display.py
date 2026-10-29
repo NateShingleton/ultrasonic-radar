@@ -1,15 +1,8 @@
 """Radar display for the ultrasonic radar
 
-Usage:
-    python radar_display.py COM5                  # Windows
-    python radar_display.py /dev/cu.usbmodem1101  # Mac
-    python radar_display.py COM5 --log run1.csv   # also save every reading
-
-Close the Arduino Serial Monitor first: only one program can use the port.
-
 Reads lines from the Arduino in either format:
-    angle,distance_cm             (Step 3 sketch)
-    angle,distance_cm,checksum    (final sketch; bad checksums are rejected)
+    angle,distance_cm
+    angle,distance_cm,checksum    (bad checksums are rejected)
 Lines starting with '#' are status messages and get printed.
 """
 import argparse
