@@ -1,12 +1,5 @@
-// Final radar firmware (Steps 5 and 6): PIR wake-up, proximity buzzer,
-// non-blocking timing with millis(), and a checksum on every line.
-//
-// Output, one line per measurement:   angle,distance_cm,checksum
-//   e.g.  90,123.4,201
-//   distance 0.0 = no echo
-//   checksum = sum of the characters in "angle,distance_cm", mod 256
-// Lines starting with '#' are status messages (the display prints them).
-//
+// Final radar firmware
+
 // Wiring:
 //   HC-SR04: Trig -> D7, Echo -> D8, VCC -> 5V, GND -> GND
 //   Servo:   signal -> D9, power from separate 5 V supply, shared ground
